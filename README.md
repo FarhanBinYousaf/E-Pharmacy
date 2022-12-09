@@ -24,4 +24,4 @@ Highly flexible site and reliable site Online Pharmacy Website developed in `ASP
 
 ## Site Look:
 
-![image](screenshots\home.png)
+![image](screenshots/home.png)
