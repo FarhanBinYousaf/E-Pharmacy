@@ -20,12 +20,6 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-4">
-                    <%--<div class="alert alert-warning alert-dismissible fade show" runat="server" id="alrt" role="alert">
-                        <strong></strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>--%>
                     
                     <asp:Label ID="lbError" ForeColor="red" runat="server" />
                     <div class="login-wrap p-0">
@@ -37,8 +31,10 @@
                                 <asp:TextBox runat="server" ID="txtPassword" TextMode="Password" CssClass="form-control" placeholder="Password" required="" />
                                 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
+                            <asp:Label ID="lblErrMsg" ForeColor="Red"  runat="server" />
+
                             <div class="form-group">
-                                <asp:Button Text="Login" ID="btnLogin" OnClick="btnLogin_Click" CssClass="form-control btn submit px-3" style="background-color: navy;" runat="server" />
+                                <asp:Button Text="Login" ID="btnLogin" OnClick="btnLogin_Click"  CssClass="form-control btn submit px-3" style="background-color: navy;" runat="server" />
                             </div>
                             <div class="form-group d-md-flex">
                                 <%-- <div class="w-100">

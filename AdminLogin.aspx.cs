@@ -9,35 +9,38 @@ public partial class AdminLogin : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-       if(Request.Cookies["Admin"] != null)
+       if(Request.Cookies["adminCookie"] != null)
        {
-           Session["admin_id"] = Request.Cookies["Admin"]["adminId"];
-           Session["admin_name"] = Request.Cookies["Admin"]["adminName"];
+           Session["adminID"] = Request.Cookies["adminCookie"]["adminId"];
+           Session["adminName"] = Request.Cookies["adminCookie"]["adminName"];
            Session.Timeout = 720;
-           Response.Redirect("dashboard.aspx");
+           Response.Redirect("AdminSide/allAdmins.aspx");
        }
     }
+
     protected void btnLogin_Click(object sender, EventArgs e)
     {
-        using(EPharmacy027Entities db = new EPharmacy027Entities())
+        using (EPharmacy027Entities db = new EPharmacy027Entities())
         {
-            var loginQuery = db.DoAdminLogin(txtEmail.Text, txtPassword.Text).ToList();
-            if (loginQuery.Count > 0)
+            var password = txtPassword.Text;
+            var middle = System.Text.Encoding.UTF8.GetBytes(password);
+            var hashedPass = System.Convert.ToBase64String(middle);
+            var LoginQuery = db.DoAdminLogin(txtEmail.Text, hashedPass).ToList();
+            if(LoginQuery.Count > 0)
             {
-                Session["admin_id"] = loginQuery[0].AdminID;
-                Session["admin_name"] = loginQuery[0].AdminName;
+                Session["adminID"] = LoginQuery[0].AdminEmail.ToString();
+                Session["adminName"] = LoginQuery[0].AdminName;
                 Session.Timeout = 720;
 
-                Response.Cookies["Admin"]["adminId"] = loginQuery[0].AdminID.ToString();
-                Response.Cookies["Admin"]["adminName"] = loginQuery[0].AdminName;
-                Response.Cookies["Admin"].Expires = DateTime.Now.AddDays(1);
+                Response.Cookies["adminCookie"]["adminId"] = LoginQuery[0].AdminID.ToString();
+                Response.Cookies["adminCookie"]["adminName"] = LoginQuery[0].AdminName;
+                Response.Cookies["adminCookie"].Expires = DateTime.Now.AddDays(1);
 
-                Response.Redirect("dashboard.aspx");
+                Response.Redirect("AdminSide/allAdmins.aspx");
             }
             else
             {
-                var errMsg = "Invalid Email of Password";
-                lbError.Text = errMsg;
+                lblErrMsg.Text = "Invalid Email or Password";
             }
         }
     }

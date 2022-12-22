@@ -10,7 +10,7 @@ public partial class logout : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         Session.Abandon();
-        Response.Cookies["Admin"].Expires = DateTime.Now.AddDays(-1);
+        Response.Cookies["adminCookie"].Expires = DateTime.Now.AddDays(-1);
         Response.Redirect("AdminLogin.aspx");
     }
 }
