@@ -9,6 +9,8 @@
         <EntityTypeShape EntityType="EPharmacy027Model.tblCategory" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPharmacy027Model.tblProduct" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="EPharmacy027Model.FK_tblProduct_tblProduct" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EPharmacy027Model.tblCompany" Width="1.5" PointX="5.375" PointY="3.875" />
+        <AssociationConnector Association="EPharmacy027Model.FK_tblProduct_tblCompany" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

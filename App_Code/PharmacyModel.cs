@@ -31,6 +31,19 @@ public partial class tblCategory
     public virtual ICollection<tblProduct> tblProducts { get; set; }
 }
 
+public partial class tblCompany
+{
+    public tblCompany()
+    {
+        this.tblProducts = new HashSet<tblProduct>();
+    }
+
+    public int CompanyID { get; set; }
+    public string CompanyName { get; set; }
+
+    public virtual ICollection<tblProduct> tblProducts { get; set; }
+}
+
 public partial class tblProduct
 {
     public int ProductID { get; set; }
@@ -43,7 +56,6 @@ public partial class tblProduct
     public string ProductUses { get; set; }
     public string ProductIngredients { get; set; }
     public string ProductBenefits { get; set; }
-    public string ProductCompany { get; set; }
     public string ProductMFG { get; set; }
     public string ProductEXP { get; set; }
     public string ProductFormat { get; set; }
@@ -53,8 +65,36 @@ public partial class tblProduct
     public string ProductFormula { get; set; }
     public string ProductManipulations { get; set; }
     public string ProductPrice { get; set; }
+    public Nullable<int> CompanyID { get; set; }
 
     public virtual tblCategory tblCategory { get; set; }
+    public virtual tblCompany tblCompany { get; set; }
+}
+
+public partial class AllProducts_Result
+{
+    public int ProductID { get; set; }
+    public string ProductName { get; set; }
+    public string ProductDescription { get; set; }
+    public int CategoryID { get; set; }
+    public string ProductImageName { get; set; }
+    public string ProductMG { get; set; }
+    public string ProductQuantity { get; set; }
+    public string ProductUses { get; set; }
+    public string ProductIngredients { get; set; }
+    public string ProductBenefits { get; set; }
+    public string ProductMFG { get; set; }
+    public string ProductEXP { get; set; }
+    public string ProductFormat { get; set; }
+    public string ProductSideEffects { get; set; }
+    public string ProductPrecautions { get; set; }
+    public string ProductAgeLimit { get; set; }
+    public string ProductFormula { get; set; }
+    public string ProductManipulations { get; set; }
+    public string ProductPrice { get; set; }
+    public Nullable<int> CompanyID { get; set; }
+    public string CategoryName { get; set; }
+    public string CompanyName { get; set; }
 }
 
 public partial class DoAdminLogin_Result
@@ -85,6 +125,12 @@ public partial class GetCategories_Result
     public string CategoryName { get; set; }
 }
 
+public partial class GetCompanies_Result
+{
+    public int CompanyID { get; set; }
+    public string CompanyName { get; set; }
+}
+
 public partial class GetProductsList_Result
 {
     public int ProductID { get; set; }
@@ -108,4 +154,31 @@ public partial class GetProductsList_Result
     public string ProductManipulations { get; set; }
     public string ProductPrice { get; set; }
     public string CategoryName { get; set; }
+}
+
+public partial class ProductsList_Result
+{
+    public int ProductID { get; set; }
+    public string ProductName { get; set; }
+    public string ProductDescription { get; set; }
+    public int CategoryID { get; set; }
+    public string ProductImageName { get; set; }
+    public string ProductMG { get; set; }
+    public string ProductQuantity { get; set; }
+    public string ProductUses { get; set; }
+    public string ProductIngredients { get; set; }
+    public string ProductBenefits { get; set; }
+    public string ProductCompany { get; set; }
+    public string ProductMFG { get; set; }
+    public string ProductEXP { get; set; }
+    public string ProductFormat { get; set; }
+    public string ProductSideEffects { get; set; }
+    public string ProductPrecautions { get; set; }
+    public string ProductAgeLimit { get; set; }
+    public string ProductFormula { get; set; }
+    public string ProductManipulations { get; set; }
+    public string ProductPrice { get; set; }
+    public Nullable<int> CompanyID { get; set; }
+    public string CategoryName { get; set; }
+    public string CompanyName { get; set; }
 }

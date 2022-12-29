@@ -13,11 +13,11 @@ public partial class AdminSide_allProducts : System.Web.UI.Page
     }
     protected void FillingProducts()
     {
-        using (EPharmacy027Entities db = new EPharmacy027Entities())
+        using(EPharmacy027Entities db = new EPharmacy027Entities())
         {
-            var products = db.GetProductsList().ToList();
-            productsGV.DataSource = products;
-            productsGV.DataBind();
+            var products = db.AllProducts().ToList();
+            ProductsGV.DataSource = products;
+            ProductsGV.DataBind();
         }
     }
     protected void productsGV_RowEditing(object sender, GridViewEditEventArgs e)

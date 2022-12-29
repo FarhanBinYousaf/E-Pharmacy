@@ -15,6 +15,10 @@
             <asp:Label Text="Select Category" runat="server" />
             <asp:DropDownList runat="server" ID="ddlCategory" CssClass="form-select">
             </asp:DropDownList>
+            <asp:Label Text="Select Company" runat="server" />
+            <asp:DropDownList runat="server" ID="ddlCompany" CssClass="form-select">
+                
+            </asp:DropDownList>
             <asp:Label Text="MG" runat="server" />
             <asp:TextBox runat="server" ID="txtMG" CssClass="form-control" />
             <asp:Label Text="Quantity" runat="server" />
@@ -25,8 +29,8 @@
             <asp:TextBox runat="server" ID="txtIngredients" CssClass="form-control" />
             <asp:Label Text="Benefits" runat="server" />
             <asp:TextBox runat="server" ID="txtBenefits" CssClass="form-control" />
-            <asp:Label Text="Company" runat="server" />
-            <asp:TextBox runat="server" ID="txtCompany" CssClass="form-control" />
+            <%--<asp:Label Text="Company" runat="server" />
+            <asp:TextBox runat="server" ID="txtCompany" CssClass="form-control" />--%>
             <asp:Label Text="MFG Date" runat="server" />
             <asp:TextBox runat="server" ID="txtMFG" CssClass="form-control" />
             <asp:Label Text="Expiry Date" runat="server" />

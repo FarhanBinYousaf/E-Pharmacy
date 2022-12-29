@@ -19,6 +19,13 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                 ddlCategory.DataValueField = "CategoryID";
                 ddlCategory.DataBind();
                 ddlCategory.Items.Insert(0, new ListItem("Select Category", "0"));
+
+                var companies = db.GetCompanies().ToList();
+                ddlCompany.DataSource = companies;
+                ddlCompany.DataTextField = "CompanyName";
+                ddlCompany.DataValueField = "CompanyID";
+                ddlCompany.DataBind();
+
                 if(Request.QueryString["pid"] != null)
                 {
                     int productId = Convert.ToInt32(Request.QueryString["pid"]);
@@ -27,12 +34,12 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                     txtDesc.Text = products.ProductDescription;
                     
                     ddlCategory.SelectedValue = products.CategoryID.ToString();
+                    ddlCompany.SelectedValue = products.CompanyID.ToString();
                     txtMG.Text = products.ProductMG;
                     txtQuantity.Text = products.ProductQuantity;
                     txtUses.Text = products.ProductUses;
                     txtIngredients.Text = products.ProductIngredients;
                     txtBenefits.Text = products.ProductBenefits;
-                    txtCompany.Text = products.ProductCompany;
                     txtMFG.Text = products.ProductMFG;
                     txtEXP.Text = products.ProductEXP;
                     txtFormat.Text = products.ProductFormat;
@@ -64,12 +71,12 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                 products.ProductDescription = txtDesc.Text;
                 //products.ProductImageName = ImageName;
                 products.CategoryID = Convert.ToInt32(ddlCategory.SelectedValue);
+                products.CompanyID = Convert.ToInt32(ddlCompany.SelectedValue);
                 products.ProductMG = txtMG.Text;
                 products.ProductQuantity = txtQuantity.Text;
                 products.ProductUses = txtUses.Text;
                 products.ProductIngredients = txtIngredients.Text;
                 products.ProductBenefits = txtBenefits.Text;
-                products.ProductCompany = txtCompany.Text;
                 products.ProductMFG = txtMFG.Text;
                 products.ProductEXP = txtEXP.Text;
                 products.ProductFormat = txtFormat.Text;
@@ -94,12 +101,12 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                 products.ProductDescription = txtDesc.Text;
                 products.ProductImageName = ImageName;
                 products.CategoryID = Convert.ToInt32(ddlCategory.SelectedValue);
+                products.CompanyID = Convert.ToInt32(ddlCompany.SelectedValue);
                 products.ProductMG = txtMG.Text;
                 products.ProductQuantity = txtQuantity.Text;
                 products.ProductUses = txtUses.Text;
                 products.ProductIngredients = txtIngredients.Text;
                 products.ProductBenefits = txtBenefits.Text;
-                products.ProductCompany = txtCompany.Text;
                 products.ProductMFG = txtMFG.Text;
                 products.ProductEXP = txtEXP.Text;
                 products.ProductFormat = txtFormat.Text;

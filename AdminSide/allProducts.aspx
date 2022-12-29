@@ -8,11 +8,12 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <asp:HyperLink NavigateUrl="~/AdminSide/ProductsSetup.aspx" CssClass="btn btn-primary mb-3" Text="Add New Product" runat="server" />
-            <asp:GridView runat="server" HeaderStyle-CssClass="text-center border-2" HeaderStyle-Font-Size="X-Large" HeaderStyle-BorderColor="Black"  HeaderStyle-BackColor="black" HeaderStyle-ForeColor="White" CssClass="table" ID="productsGV" OnRowEditing="productsGV_RowEditing" OnRowDeleting="productsGV_RowDeleting" OnRowCommand="productsGV_RowCommand" AutoGenerateColumns="false">
+            <asp:GridView runat="server" HeaderStyle-CssClass="text-center border-2" HeaderStyle-Font-Size="X-Large" HeaderStyle-BorderColor="Black"  HeaderStyle-BackColor="black" HeaderStyle-ForeColor="White" CssClass="table" ID="ProductsGV" OnRowEditing="productsGV_RowEditing" OnRowDeleting="productsGV_RowDeleting" OnRowCommand="productsGV_RowCommand" AutoGenerateColumns="false" >
                 <Columns>
                     <asp:BoundField DataField="ProductName" HeaderText="Name" />
                     <asp:BoundField DataField="ProductPrice" HeaderText="Price" />
                     <asp:BoundField DataField="CategoryName" HeaderText="Category" />
+                    <asp:BoundField DataField="CompanyName"  HeaderText="Company" />
                     <asp:BoundField DataField="ProductFormat" HeaderText="Format" />
                     <asp:TemplateField HeaderText="Image">
                         <ItemTemplate>

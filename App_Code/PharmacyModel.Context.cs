@@ -29,6 +29,7 @@ public partial class EPharmacy027Entities : DbContext
     public DbSet<tblAdmin> tblAdmins { get; set; }
     public DbSet<tblCategory> tblCategories { get; set; }
     public DbSet<tblProduct> tblProducts { get; set; }
+    public DbSet<tblCompany> tblCompanies { get; set; }
 
     public virtual int CategoryDelete(Nullable<int> catId)
     {
@@ -93,5 +94,29 @@ public partial class EPharmacy027Entities : DbContext
             new ObjectParameter("ProductId", typeof(int));
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteProduct", productIdParameter);
+    }
+
+    public virtual ObjectResult<GetCompanies_Result> GetCompanies()
+    {
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCompanies_Result>("GetCompanies");
+    }
+
+    public virtual int DeleteCompany(Nullable<int> companyId)
+    {
+        var companyIdParameter = companyId.HasValue ?
+            new ObjectParameter("companyId", companyId) :
+            new ObjectParameter("companyId", typeof(int));
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteCompany", companyIdParameter);
+    }
+
+    public virtual ObjectResult<ProductsList_Result> ProductsList()
+    {
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductsList_Result>("ProductsList");
+    }
+
+    public virtual ObjectResult<AllProducts_Result> AllProducts()
+    {
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllProducts_Result>("AllProducts");
     }
 }
