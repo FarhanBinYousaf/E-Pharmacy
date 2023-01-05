@@ -11,8 +11,8 @@ public partial class AdminSide_allProducts : System.Web.UI.Page
     {
         FillingProducts();
 
-        ProductsGV.UseAccessibleHeader = true;
-        ProductsGV.HeaderRow.TableSection = TableRowSection.TableHeader;
+        //ProductsGV.UseAccessibleHeader = true;
+        //ProductsGV.HeaderRow.TableSection = TableRowSection.TableHeader;
     }
     protected void FillingProducts()
     {

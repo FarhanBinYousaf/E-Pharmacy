@@ -14,6 +14,7 @@
                     <asp:BoundField DataField="ProductPrice" HeaderText="Price" />
                     <asp:BoundField DataField="CategoryName" HeaderText="Category" />
                     <asp:BoundField DataField="CompanyName"  HeaderText="Company" />
+                    <asp:BoundField DataField="ProductQuantity" HeaderText="Quantity" />
                     <asp:BoundField DataField="ProductFormat" HeaderText="Format" />
                     <asp:TemplateField HeaderText="Image">
                         <ItemTemplate>

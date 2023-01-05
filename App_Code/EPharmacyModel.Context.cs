@@ -28,8 +28,13 @@ public partial class EPharmacy027Entities : DbContext
 
     public DbSet<tblAdmin> tblAdmins { get; set; }
     public DbSet<tblCategory> tblCategories { get; set; }
-    public DbSet<tblProduct> tblProducts { get; set; }
     public DbSet<tblCompany> tblCompanies { get; set; }
+    public DbSet<tblProduct> tblProducts { get; set; }
+
+    public virtual ObjectResult<AllProducts_Result> AllProducts()
+    {
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllProducts_Result>("AllProducts");
+    }
 
     public virtual int CategoryDelete(Nullable<int> catId)
     {
@@ -43,6 +48,24 @@ public partial class EPharmacy027Entities : DbContext
     public virtual int DeleteCategory()
     {
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteCategory");
+    }
+
+    public virtual int DeleteCompany(Nullable<int> companyId)
+    {
+        var companyIdParameter = companyId.HasValue ?
+            new ObjectParameter("companyId", companyId) :
+            new ObjectParameter("companyId", typeof(int));
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteCompany", companyIdParameter);
+    }
+
+    public virtual int DeleteProduct(Nullable<int> productId)
+    {
+        var productIdParameter = productId.HasValue ?
+            new ObjectParameter("ProductId", productId) :
+            new ObjectParameter("ProductId", typeof(int));
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteProduct", productIdParameter);
     }
 
     public virtual int DoAdminDelete(Nullable<int> adminId)
@@ -82,41 +105,8 @@ public partial class EPharmacy027Entities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCategories_Result>("GetCategories");
     }
 
-    public virtual ObjectResult<GetProductsList_Result> GetProductsList()
-    {
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsList_Result>("GetProductsList");
-    }
-
-    public virtual int DeleteProduct(Nullable<int> productId)
-    {
-        var productIdParameter = productId.HasValue ?
-            new ObjectParameter("ProductId", productId) :
-            new ObjectParameter("ProductId", typeof(int));
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteProduct", productIdParameter);
-    }
-
     public virtual ObjectResult<GetCompanies_Result> GetCompanies()
     {
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCompanies_Result>("GetCompanies");
-    }
-
-    public virtual int DeleteCompany(Nullable<int> companyId)
-    {
-        var companyIdParameter = companyId.HasValue ?
-            new ObjectParameter("companyId", companyId) :
-            new ObjectParameter("companyId", typeof(int));
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteCompany", companyIdParameter);
-    }
-
-    public virtual ObjectResult<ProductsList_Result> ProductsList()
-    {
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductsList_Result>("ProductsList");
-    }
-
-    public virtual ObjectResult<AllProducts_Result> AllProducts()
-    {
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllProducts_Result>("AllProducts");
     }
 }

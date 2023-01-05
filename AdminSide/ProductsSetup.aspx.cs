@@ -37,7 +37,7 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                     ddlCategory.SelectedValue = products.CategoryID.ToString();
                     ddlCompany.SelectedValue = products.CompanyID.ToString();
                     txtMG.Text = products.ProductMG;
-                    txtQuantity.Text = products.ProductQuantity;
+                    txtQuantity.Text = products.ProductQuantity.ToString();
                     txtUses.Text = products.ProductUses;
                     txtIngredients.Text = products.ProductIngredients;
                     txtBenefits.Text = products.ProductBenefits;
@@ -49,7 +49,7 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                     txtAgeLimit.Text = products.ProductAgeLimit;
                     txtFormula.Text = products.ProductFormula;
                     txtManipulation.Text = products.ProductManipulations;
-                    txtPrice.Text = products.ProductPrice;
+                    txtPrice.Text = products.ProductPrice.ToString();
                 }
             }
         }
@@ -87,7 +87,7 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                 products.CategoryID = Convert.ToInt32(ddlCategory.SelectedValue);
                 products.CompanyID = Convert.ToInt32(ddlCompany.SelectedValue);
                 products.ProductMG = txtMG.Text;
-                products.ProductQuantity = txtQuantity.Text;
+                products.ProductQuantity = int.Parse(txtQuantity.Text);
                 products.ProductUses = txtUses.Text;
                 products.ProductIngredients = txtIngredients.Text;
                 products.ProductBenefits = txtBenefits.Text;
@@ -99,7 +99,7 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                 products.ProductAgeLimit = txtAgeLimit.Text;
                 products.ProductFormula = txtFormula.Text;
                 products.ProductManipulations = txtManipulation.Text;
-                products.ProductPrice = txtPrice.Text;
+                products.ProductPrice = decimal.Parse(txtPrice.Text);
                 db.SaveChanges();
                 Response.Redirect("allProducts.aspx");
                 lblAddMsg.Text = "Updated Successfully";
@@ -121,7 +121,7 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                 products.CategoryID = Convert.ToInt32(ddlCategory.SelectedValue);
                 products.CompanyID = Convert.ToInt32(ddlCompany.SelectedValue);
                 products.ProductMG = txtMG.Text;
-                products.ProductQuantity = txtQuantity.Text;
+                products.ProductQuantity = int.Parse(txtQuantity.Text);
                 products.ProductUses = txtUses.Text;
                 products.ProductIngredients = txtIngredients.Text;
                 products.ProductBenefits = txtBenefits.Text;
@@ -133,7 +133,7 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                 products.ProductAgeLimit = txtAgeLimit.Text;
                 products.ProductFormula = txtFormula.Text;
                 products.ProductManipulations = txtManipulation.Text;
-                products.ProductPrice = txtPrice.Text;
+                products.ProductPrice = decimal.Parse(txtPrice.Text);
                 db.tblProducts.Add(products);
                 db.SaveChanges();
                 Response.Redirect("allProducts.aspx");

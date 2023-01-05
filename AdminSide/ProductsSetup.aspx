@@ -21,7 +21,7 @@
             <asp:Label Text="MG" runat="server" />
             <asp:TextBox runat="server" ID="txtMG" CssClass="form-control" />
             <asp:Label Text="Quantity" runat="server" />
-            <asp:TextBox runat="server" ID="txtQuantity" CssClass="form-control" />
+            <asp:TextBox runat="server" ID="txtQuantity" TextMode="Number" CssClass="form-control" />
             <asp:Label Text="Uses" runat="server" />
             <asp:TextBox runat="server" ID="txtUses" CssClass="form-control" />
             <asp:Label Text="Ingredients" runat="server" />
