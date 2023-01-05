@@ -28,11 +28,12 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
 
                 if(Request.QueryString["pid"] != null)
                 {
+                    string imgUrl = "ProductsImages/";
                     int productId = Convert.ToInt32(Request.QueryString["pid"]);
                     tblProduct products = db.tblProducts.FirstOrDefault(id => id.ProductID == productId);
                     txtName.Text = products.ProductName;
                     txtDesc.Text = products.ProductDescription;
-                    
+                    img.ImageUrl = imgUrl + products.ProductImageName;
                     ddlCategory.SelectedValue = products.CategoryID.ToString();
                     ddlCompany.SelectedValue = products.CompanyID.ToString();
                     txtMG.Text = products.ProductMG;
@@ -64,12 +65,25 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
 
                 int productId = Convert.ToInt32(Request.QueryString["pid"]);
                 tblProduct products = db.tblProducts.FirstOrDefault(id => id.ProductID == productId);
-                //string ImageName = ProductImage.FileName;
-                //string ImagePath = Server.MapPath("ProductsImages/");
-                //ProductImage.SaveAs(ImagePath + ImageName);
+
+                string ImageName = ProductImage.FileName;
+                string ImagePath = Server.MapPath("ProductsImages/");
+                
+                if(ProductImage.HasFile)
+                {
+                    ProductImage.SaveAs(ImagePath + ImageName);
+                }
                 products.ProductName = txtName.Text;
                 products.ProductDescription = txtDesc.Text;
-                //products.ProductImageName = ImageName;
+                
+                if(!ProductImage.HasFile)
+                {
+                    products.ProductImageName = products.ProductImageName;
+                }
+                else
+                {
+                    products.ProductImageName = ImageName;
+                }
                 products.CategoryID = Convert.ToInt32(ddlCategory.SelectedValue);
                 products.CompanyID = Convert.ToInt32(ddlCompany.SelectedValue);
                 products.ProductMG = txtMG.Text;
@@ -93,9 +107,13 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
             else
             {
                 tblProduct products = new tblProduct();
+
                 string ImageName = ProductImage.FileName;
                 string ImagePath = Server.MapPath("ProductsImages/");
-                ProductImage.SaveAs(ImagePath + ImageName);
+                if(ProductImage.HasFile)
+                {
+                    ProductImage.SaveAs(ImagePath + ImageName);
+                }
 
                 products.ProductName = txtName.Text;
                 products.ProductDescription = txtDesc.Text;

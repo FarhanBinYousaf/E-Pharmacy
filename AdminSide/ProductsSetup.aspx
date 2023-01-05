@@ -15,9 +15,8 @@
             <asp:Label Text="Select Category" runat="server" />
             <asp:DropDownList runat="server" ID="ddlCategory" CssClass="form-select">
             </asp:DropDownList>
-            <asp:Label Text="Select Company" runat="server" />
+            <asp:Label Text="Select Medicine Company" runat="server" />
             <asp:DropDownList runat="server" ID="ddlCompany" CssClass="form-select">
-                
             </asp:DropDownList>
             <asp:Label Text="MG" runat="server" />
             <asp:TextBox runat="server" ID="txtMG" CssClass="form-control" />
@@ -53,8 +52,10 @@
             <asp:Button Text="Add Product" CssClass="btn btn-primary mt-3 mb-3" ID="btnAddProduct" OnClick="btnAddProduct_Click" runat="server" />
             <asp:HyperLink NavigateUrl="~/AdminSide/ProductsSetup.aspx" CssClass="btn btn-danger mt-3 mb-3" Text="Cancel" runat="server" />
         </div>
-        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <asp:Image Width="200" Height="200" ID="img" runat="server" />
+        </div>
     </div>
-    
+   
 </asp:Content>
 

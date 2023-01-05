@@ -10,6 +10,8 @@ public partial class AdminSide_allCategories : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         FillCategories();
+        GVCategories.UseAccessibleHeader = true;
+        GVCategories.HeaderRow.TableSection = TableRowSection.TableHeader;
     }
     protected void FillCategories()
     {

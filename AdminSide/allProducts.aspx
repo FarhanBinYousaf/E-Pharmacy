@@ -31,10 +31,6 @@
         </div>
         <div class="col-md-3"></div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $('#ContentPlaceHolder1_productsGV').DataTable();
-        });
-    </script>
+    
 </asp:Content>
 

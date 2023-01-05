@@ -21,5 +21,10 @@
         </div>
         <div class="col-md-4"></div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#ContentPlaceHolder1_GVCategories').DataTable();
+        });
+    </script>
 </asp:Content>
 

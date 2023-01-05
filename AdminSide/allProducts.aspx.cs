@@ -10,6 +10,9 @@ public partial class AdminSide_allProducts : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         FillingProducts();
+
+        ProductsGV.UseAccessibleHeader = true;
+        ProductsGV.HeaderRow.TableSection = TableRowSection.TableHeader;
     }
     protected void FillingProducts()
     {

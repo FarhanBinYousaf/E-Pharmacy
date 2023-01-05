@@ -19,11 +19,9 @@ public partial class AdminSide_AdminSetup : System.Web.UI.Page
                     tblAdmin AdminData = db.tblAdmins.FirstOrDefault(admin => admin.AdminID == adminId);
                     txtName.Text = AdminData.AdminName;
                     txtEmail.Text = AdminData.AdminEmail;
-                    //var dbPassword = AdminData.AdminPassword;
-                    //var dppass = System.Convert.FromBase64String(dbPassword);
-                    //var DecryptedPassword = System.Text.Encoding.UTF8.GetString(dppass);
-                    txtPass.Text = AdminData.AdminPassword;
-                    txtConfirmPass.Text = AdminData.AdminPassword;
+                    txtPass.Attributes["Value"] = AdminData.AdminPassword;
+                    // Show the password on Edit page using it's attributes
+                    txtConfirmPass.Attributes["Value"] = AdminData.AdminPassword;
                     
                     
                 }
@@ -39,14 +37,25 @@ public partial class AdminSide_AdminSetup : System.Web.UI.Page
             if (Request.QueryString["adminId"] != null)
             {
                 int adminId = Convert.ToInt32(Request.QueryString["adminId"]);
+                // Get the record of query string ID from database
                 tblAdmin ad = db.tblAdmins.FirstOrDefault(v => v.AdminID == adminId);
                 ad.AdminName = txtName.Text;
                 ad.AdminEmail = txtEmail.Text;
-                ad.AdminPassword = txtPass.Text;
+
+                var Pass = System.Text.Encoding.UTF8.GetBytes(txtPass.Text);
+                var HashedPassword = System.Convert.ToBase64String(Pass);
+
+                ad.AdminPassword = HashedPassword;
+                //check for Email Duplication when goes to edit record
                 tblAdmin EmailDuplication = db.tblAdmins.FirstOrDefault(email => email.AdminEmail == txtEmail.Text & email.AdminID != adminId);
                 if (EmailDuplication != null)
                 {
                     lblErrorMsg.Text = "Email Already Exist";
+                    return;
+                }
+                else if (txtPass.Text != txtConfirmPass.Text)
+                {
+                    lblErrorMsg.Text = "Password do not match";
                     return;
                 }
                 else
@@ -61,11 +70,13 @@ public partial class AdminSide_AdminSetup : System.Web.UI.Page
                 tblAdmin admin = new tblAdmin();
                 var Name = txtName.Text;
                 var Email = txtEmail.Text;
+                //Password Encryption 
                 var Pass = System.Text.Encoding.UTF8.GetBytes(txtPass.Text);
                 var HashedPassword = System.Convert.ToBase64String(Pass);
                 admin.AdminName = Name;
                 admin.AdminEmail = Email;
                 admin.AdminPassword = HashedPassword;
+                // Check for Email Duplication 
                 tblAdmin EmailDuplication = db.tblAdmins.FirstOrDefault(email => email.AdminEmail == Email);
                 if (EmailDuplication != null)
                 {

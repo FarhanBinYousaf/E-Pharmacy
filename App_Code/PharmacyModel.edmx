@@ -156,7 +156,7 @@
           <Property Name="ProductAgeLimit" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ProductFormula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ProductManipulations" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ProductPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductPrice" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="tblCategory" Relationship="Self.FK_tblProduct_tblProduct" FromRole="tblProduct" ToRole="tblCategory" />
           <Property Name="CompanyID" Type="Int32" />
           <NavigationProperty Name="tblCompany" Relationship="EPharmacy027Model.FK_tblProduct_tblCompany" FromRole="tblProduct" ToRole="tblCompany" />

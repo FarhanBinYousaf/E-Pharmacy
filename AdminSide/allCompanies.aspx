@@ -6,6 +6,7 @@
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
+            <asp:HyperLink NavigateUrl="~/AdminSide/CategoriesSetup.aspx" Text="Add New Category" CssClass="btn btn-primary mb-3" runat="server" />
             <asp:GridView runat="server" ID="companyGV" HeaderStyle-CssClass="text-center border-2" HeaderStyle-Font-Size="X-Large" HeaderStyle-BorderColor="Black"  HeaderStyle-BackColor="black" HeaderStyle-ForeColor="White" CssClass="table " AutoGenerateColumns="false" OnRowEditing="companyGV_RowEditing" OnRowDeleting="companyGV_RowDeleting" OnRowCommand="companyGV_RowCommand">
                 <Columns>
                     <asp:BoundField DataField="CompanyName" HeaderText="Name"  />

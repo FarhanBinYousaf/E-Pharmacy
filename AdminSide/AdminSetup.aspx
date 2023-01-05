@@ -18,12 +18,12 @@
             </div>
             <div>
                 <label for="password" class="form-label">Password</label>
-                <asp:TextBox runat="server" ID="txtPass" CssClass="form-control"  />
+                <asp:TextBox runat="server" TextMode="Password" ID="txtPass" CssClass="form-control"  />
                 <asp:RequiredFieldValidator ErrorMessage="Password is required" ControlToValidate="txtPass" ForeColor="Red" runat="server" />
             </div>
             <div>
                 <label for="password" class="form-label">Confirm Password</label>
-                <asp:TextBox runat="server" ID="txtConfirmPass" CssClass="form-control"  />
+                <asp:TextBox runat="server" TextMode="Password" ID="txtConfirmPass" CssClass="form-control"  />
             </div>
             <div>
                 <asp:Label ID="lblErrorMsg" ForeColor="Red" runat="server" />
