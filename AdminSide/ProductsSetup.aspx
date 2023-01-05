@@ -53,7 +53,7 @@
             <asp:HyperLink NavigateUrl="~/AdminSide/ProductsSetup.aspx" CssClass="btn btn-danger mt-3 mb-3" Text="Cancel" runat="server" />
         </div>
         <div class="col-md-4">
-            <asp:Image Width="200" Height="200" ID="img" runat="server" />
+            <asp:Image style="border-radius:8px;" Width="200" Height="200" ID="img" BorderStyle="Ridge" runat="server" />
         </div>
     </div>
    
