@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EPharmacy027Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPharmacy027Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblAdmin">
           <Key>
             <PropertyRef Name="AdminID" />
@@ -27,6 +27,36 @@
           </Key>
           <Property Name="CompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblContact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Subject" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblCustomerDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ShippingAddress" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblOrderDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductPrice" Type="money" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tblProduct">
           <Key>
@@ -53,6 +83,27 @@
           <Property Name="ProductPrice" Type="money" Nullable="false" />
           <Property Name="CompanyID" Type="int" />
         </EntityType>
+        <EntityType Name="tblTemp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProID" Type="int" Nullable="false" />
+          <Property Name="UniqueNo" Type="bigint" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblOrderDetail_tblCustomerDetail">
+          <End Role="tblCustomerDetail" Type="Self.tblCustomerDetail" Multiplicity="1" />
+          <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomerDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblProduct_tblCategory">
           <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="1" />
           <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="*" />
@@ -77,7 +128,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblTemp_tblProduct">
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="1" />
+          <End Role="tblTemp" Type="Self.tblTemp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProduct">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tblTemp">
+              <PropertyRef Name="ProID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="AllProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="CartedProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uniqueNo" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="CategoryDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CatId" Type="int" Mode="In" />
         </Function>
@@ -98,12 +164,23 @@
         <Function Name="GetAdmins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetCategoryDepProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CatID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetCompanies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="EPharmacy027ModelStoreContainer">
           <EntitySet Name="tblAdmin" EntityType="Self.tblAdmin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCompany" EntityType="Self.tblCompany" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblContact" EntityType="Self.tblContact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCustomerDetail" EntityType="Self.tblCustomerDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOrderDetail" EntityType="Self.tblOrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProduct" EntityType="Self.tblProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTemp" EntityType="Self.tblTemp" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblOrderDetail_tblCustomerDetail" Association="Self.FK_tblOrderDetail_tblCustomerDetail">
+            <End Role="tblCustomerDetail" EntitySet="tblCustomerDetail" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblProduct_tblCategory" Association="Self.FK_tblProduct_tblCategory">
             <End Role="tblCategory" EntitySet="tblCategory" />
             <End Role="tblProduct" EntitySet="tblProduct" />
@@ -112,9 +189,12 @@
             <End Role="tblCompany" EntitySet="tblCompany" />
             <End Role="tblProduct" EntitySet="tblProduct" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblTemp_tblProduct" Association="Self.FK_tblTemp_tblProduct">
+            <End Role="tblProduct" EntitySet="tblProduct" />
+            <End Role="tblTemp" EntitySet="tblTemp" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EPharmacy027Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -169,6 +249,17 @@
           <Property Name="CompanyID" Type="Int32" />
           <NavigationProperty Name="tblCategory" Relationship="Self.FK_tblProduct_tblCategory" FromRole="tblProduct" ToRole="tblCategory" />
           <NavigationProperty Name="tblCompany" Relationship="Self.FK_tblProduct_tblCompany" FromRole="tblProduct" ToRole="tblCompany" />
+          <NavigationProperty Name="tblTemps" Relationship="Self.FK_tblTemp_tblProduct" FromRole="tblProduct" ToRole="tblTemp" />
+        </EntityType>
+        <EntityType Name="tblTemp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProID" Type="Int32" Nullable="false" />
+          <Property Name="UniqueNo" Type="Int64" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblProduct" Relationship="Self.FK_tblTemp_tblProduct" FromRole="tblTemp" ToRole="tblProduct" />
         </EntityType>
         <Association Name="FK_tblProduct_tblCategory">
           <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="1" />
@@ -194,11 +285,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblTemp_tblProduct">
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="1" />
+          <End Role="tblTemp" Type="Self.tblTemp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProduct">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tblTemp">
+              <PropertyRef Name="ProID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EPharmacy027Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblAdmins" EntityType="Self.tblAdmin" />
           <EntitySet Name="tblCategories" EntityType="Self.tblCategory" />
           <EntitySet Name="tblCompanies" EntityType="Self.tblCompany" />
           <EntitySet Name="tblProducts" EntityType="Self.tblProduct" />
+          <EntitySet Name="tblTemps" EntityType="Self.tblTemp" />
           <AssociationSet Name="FK_tblProduct_tblCategory" Association="Self.FK_tblProduct_tblCategory">
             <End Role="tblCategory" EntitySet="tblCategories" />
             <End Role="tblProduct" EntitySet="tblProducts" />
@@ -207,19 +311,26 @@
             <End Role="tblCompany" EntitySet="tblCompanies" />
             <End Role="tblProduct" EntitySet="tblProducts" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblTemp_tblProduct" Association="Self.FK_tblTemp_tblProduct">
+            <End Role="tblProduct" EntitySet="tblProducts" />
+            <End Role="tblTemp" EntitySet="tblTemps" />
+          </AssociationSet>
           <FunctionImport Name="AllProducts" ReturnType="Collection(EPharmacy027Model.AllProducts_Result)" />
+          <FunctionImport Name="CartedProducts" ReturnType="Collection(EPharmacy027Model.CartedProducts_Result)">
+          <Parameter Name="uniqueNo" Mode="In" Type="Int64" />
+          </FunctionImport>
           <FunctionImport Name="CategoryDelete">
-            <Parameter Name="CatId" Mode="In" Type="Int32" />
+          <Parameter Name="CatId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteCategory" />
           <FunctionImport Name="DeleteCompany">
-            <Parameter Name="companyId" Mode="In" Type="Int32" />
+          <Parameter Name="companyId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteProduct">
-            <Parameter Name="ProductId" Mode="In" Type="Int32" />
+          <Parameter Name="ProductId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DoAdminDelete">
-            <Parameter Name="adminId" Mode="In" Type="Int32" />
+          <Parameter Name="adminId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DoAdminLogin" ReturnType="Collection(EPharmacy027Model.DoAdminLogin_Result)">
             <Parameter Name="email" Mode="In" Type="String" />
@@ -228,7 +339,17 @@
           <FunctionImport Name="GetAdmins" ReturnType="Collection(EPharmacy027Model.GetAdmins_Result)" />
           <FunctionImport Name="GetAllCategories" ReturnType="Collection(EPharmacy027Model.GetAllCategories_Result)" />
           <FunctionImport Name="GetCategories" ReturnType="Collection(EPharmacy027Model.GetCategories_Result)" />
+          <FunctionImport Name="GetCategoryDepProducts" ReturnType="Collection(EPharmacy027Model.GetCategoryDepProducts_Result)">
+          <Parameter Name="CatID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="GetCompanies" ReturnType="Collection(EPharmacy027Model.GetCompanies_Result)" />
+          <EntitySet Name="tblCustomerDetails" EntityType="EPharmacy027Model.tblCustomerDetail" />
+          <EntitySet Name="tblOrderDetails" EntityType="EPharmacy027Model.tblOrderDetail" />
+          <AssociationSet Name="FK_tblOrderDetail_tblCustomerDetail" Association="EPharmacy027Model.FK_tblOrderDetail_tblCustomerDetail">
+            <End Role="tblCustomerDetail" EntitySet="tblCustomerDetails" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetails" />
+          </AssociationSet>
+          <EntitySet Name="tblContacts" EntityType="EPharmacy027Model.tblContact" />
         </EntityContainer>
         <ComplexType Name="AllProducts_Result">
           <Property Type="Int32" Name="ProductID" Nullable="false" />
@@ -254,6 +375,32 @@
           <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="CompanyName" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="CartedProducts_Result">
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="ProductName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ProductDescription" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="CategoryID" Nullable="false" />
+          <Property Type="String" Name="ProductImageName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ProductMG" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ProductQuantity" Nullable="false" />
+          <Property Type="String" Name="ProductUses" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ProductIngredients" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ProductBenefits" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ProductMFG" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductEXP" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductFormat" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductSideEffects" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ProductPrecautions" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ProductAgeLimit" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductFormula" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductManipulations" Nullable="true" MaxLength="200" />
+          <Property Type="Decimal" Name="ProductPrice" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="CompanyID" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="ProID" Nullable="false" />
+          <Property Type="Int64" Name="UniqueNo" Nullable="false" />
+          <Property Type="DateTime" Name="DateTime" Nullable="false" Precision="23" />
+        </ComplexType>
         <ComplexType Name="DoAdminLogin_Result">
           <Property Type="Int32" Name="AdminID" Nullable="false" />
           <Property Type="String" Name="AdminName" Nullable="false" MaxLength="30" />
@@ -274,10 +421,76 @@
           <Property Type="Int32" Name="CategoryID" Nullable="false" />
           <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="GetCategoryDepProducts_Result">
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="ProductName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ProductDescription" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="CategoryID" Nullable="false" />
+          <Property Type="String" Name="ProductImageName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ProductMG" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ProductQuantity" Nullable="false" />
+          <Property Type="String" Name="ProductUses" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ProductIngredients" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ProductBenefits" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ProductMFG" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductEXP" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductFormat" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductSideEffects" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ProductPrecautions" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ProductAgeLimit" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductFormula" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductManipulations" Nullable="true" MaxLength="200" />
+          <Property Type="Decimal" Name="ProductPrice" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="CompanyID" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="GetCompanies_Result">
           <Property Type="Int32" Name="CompanyID" Nullable="false" />
           <Property Type="String" Name="CompanyName" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="tblCustomerDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ShippingAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblOrderDetails" Relationship="EPharmacy027Model.FK_tblOrderDetail_tblCustomerDetail" FromRole="tblCustomerDetail" ToRole="tblOrderDetail" />
+        </EntityType>
+        <EntityType Name="tblOrderDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="ProductPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblCustomerDetail" Relationship="EPharmacy027Model.FK_tblOrderDetail_tblCustomerDetail" FromRole="tblOrderDetail" ToRole="tblCustomerDetail" />
+        </EntityType>
+        <Association Name="FK_tblOrderDetail_tblCustomerDetail">
+          <End Type="EPharmacy027Model.tblCustomerDetail" Role="tblCustomerDetail" Multiplicity="1" />
+          <End Type="EPharmacy027Model.tblOrderDetail" Role="tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomerDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblContact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -336,6 +549,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblTemps">
+            <EntityTypeMapping TypeName="EPharmacy027Model.tblTemp">
+              <MappingFragment StoreEntitySet="tblTemp">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProID" ColumnName="ProID" />
+                <ScalarProperty Name="UniqueNo" ColumnName="UniqueNo" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="AllProducts" FunctionName="EPharmacy027Model.Store.AllProducts">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EPharmacy027Model.AllProducts_Result">
@@ -361,6 +584,36 @@
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CartedProducts" FunctionName="EPharmacy027Model.Store.CartedProducts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EPharmacy027Model.CartedProducts_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductDescription" ColumnName="ProductDescription" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="ProductImageName" ColumnName="ProductImageName" />
+                <ScalarProperty Name="ProductMG" ColumnName="ProductMG" />
+                <ScalarProperty Name="ProductQuantity" ColumnName="ProductQuantity" />
+                <ScalarProperty Name="ProductUses" ColumnName="ProductUses" />
+                <ScalarProperty Name="ProductIngredients" ColumnName="ProductIngredients" />
+                <ScalarProperty Name="ProductBenefits" ColumnName="ProductBenefits" />
+                <ScalarProperty Name="ProductMFG" ColumnName="ProductMFG" />
+                <ScalarProperty Name="ProductEXP" ColumnName="ProductEXP" />
+                <ScalarProperty Name="ProductFormat" ColumnName="ProductFormat" />
+                <ScalarProperty Name="ProductSideEffects" ColumnName="ProductSideEffects" />
+                <ScalarProperty Name="ProductPrecautions" ColumnName="ProductPrecautions" />
+                <ScalarProperty Name="ProductAgeLimit" ColumnName="ProductAgeLimit" />
+                <ScalarProperty Name="ProductFormula" ColumnName="ProductFormula" />
+                <ScalarProperty Name="ProductManipulations" ColumnName="ProductManipulations" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProID" ColumnName="ProID" />
+                <ScalarProperty Name="UniqueNo" ColumnName="UniqueNo" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -405,6 +658,32 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCategoryDepProducts" FunctionName="EPharmacy027Model.Store.GetCategoryDepProducts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EPharmacy027Model.GetCategoryDepProducts_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductDescription" ColumnName="ProductDescription" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="ProductImageName" ColumnName="ProductImageName" />
+                <ScalarProperty Name="ProductMG" ColumnName="ProductMG" />
+                <ScalarProperty Name="ProductQuantity" ColumnName="ProductQuantity" />
+                <ScalarProperty Name="ProductUses" ColumnName="ProductUses" />
+                <ScalarProperty Name="ProductIngredients" ColumnName="ProductIngredients" />
+                <ScalarProperty Name="ProductBenefits" ColumnName="ProductBenefits" />
+                <ScalarProperty Name="ProductMFG" ColumnName="ProductMFG" />
+                <ScalarProperty Name="ProductEXP" ColumnName="ProductEXP" />
+                <ScalarProperty Name="ProductFormat" ColumnName="ProductFormat" />
+                <ScalarProperty Name="ProductSideEffects" ColumnName="ProductSideEffects" />
+                <ScalarProperty Name="ProductPrecautions" ColumnName="ProductPrecautions" />
+                <ScalarProperty Name="ProductAgeLimit" ColumnName="ProductAgeLimit" />
+                <ScalarProperty Name="ProductFormula" ColumnName="ProductFormula" />
+                <ScalarProperty Name="ProductManipulations" ColumnName="ProductManipulations" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetCompanies" FunctionName="EPharmacy027Model.Store.GetCompanies">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EPharmacy027Model.GetCompanies_Result">
@@ -413,6 +692,39 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblCustomerDetails">
+            <EntityTypeMapping TypeName="EPharmacy027Model.tblCustomerDetail">
+              <MappingFragment StoreEntitySet="tblCustomerDetail">
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="ShippingAddress" ColumnName="ShippingAddress" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOrderDetails">
+            <EntityTypeMapping TypeName="EPharmacy027Model.tblOrderDetail">
+              <MappingFragment StoreEntitySet="tblOrderDetail">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblContacts">
+            <EntityTypeMapping TypeName="EPharmacy027Model.tblContact">
+              <MappingFragment StoreEntitySet="tblContact">
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -30,10 +30,23 @@ public partial class EPharmacy027Entities : DbContext
     public DbSet<tblCategory> tblCategories { get; set; }
     public DbSet<tblCompany> tblCompanies { get; set; }
     public DbSet<tblProduct> tblProducts { get; set; }
+    public DbSet<tblTemp> tblTemps { get; set; }
+    public DbSet<tblCustomerDetail> tblCustomerDetails { get; set; }
+    public DbSet<tblOrderDetail> tblOrderDetails { get; set; }
+    public DbSet<tblContact> tblContacts { get; set; }
 
     public virtual ObjectResult<AllProducts_Result> AllProducts()
     {
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllProducts_Result>("AllProducts");
+    }
+
+    public virtual ObjectResult<CartedProducts_Result> CartedProducts(Nullable<long> uniqueNo)
+    {
+        var uniqueNoParameter = uniqueNo.HasValue ?
+            new ObjectParameter("uniqueNo", uniqueNo) :
+            new ObjectParameter("uniqueNo", typeof(long));
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CartedProducts_Result>("CartedProducts", uniqueNoParameter);
     }
 
     public virtual int CategoryDelete(Nullable<int> catId)
@@ -103,6 +116,15 @@ public partial class EPharmacy027Entities : DbContext
     public virtual ObjectResult<GetCategories_Result> GetCategories()
     {
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCategories_Result>("GetCategories");
+    }
+
+    public virtual ObjectResult<GetCategoryDepProducts_Result> GetCategoryDepProducts(Nullable<int> catID)
+    {
+        var catIDParameter = catID.HasValue ?
+            new ObjectParameter("CatID", catID) :
+            new ObjectParameter("CatID", typeof(int));
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCategoryDepProducts_Result>("GetCategoryDepProducts", catIDParameter);
     }
 
     public virtual ObjectResult<GetCompanies_Result> GetCompanies()

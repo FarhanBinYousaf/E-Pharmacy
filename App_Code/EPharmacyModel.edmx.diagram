@@ -4,13 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="dbe1821248124de1a976f6abb22471ff" Name="Diagram1">
-        <EntityTypeShape EntityType="EPharmacy027Model.tblAdmin" Width="1.5" PointX="5.75" PointY="1.625" IsExpanded="true" />
+      <Diagram DiagramId="db23b83864b04f60a30318308a7d08a6" Name="Diagram1">
+        <EntityTypeShape EntityType="EPharmacy027Model.tblAdmin" Width="1.5" PointX="5.75" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPharmacy027Model.tblCategory" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPharmacy027Model.tblCompany" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPharmacy027Model.tblProduct" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPharmacy027Model.tblTemp" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
         <AssociationConnector Association="EPharmacy027Model.FK_tblProduct_tblCategory" ManuallyRouted="false" />
         <AssociationConnector Association="EPharmacy027Model.FK_tblProduct_tblCompany" ManuallyRouted="false" />
+        <AssociationConnector Association="EPharmacy027Model.FK_tblTemp_tblProduct" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EPharmacy027Model.tblCustomerDetail" Width="1.5" PointX="7.375" PointY="1" />
+        <EntityTypeShape EntityType="EPharmacy027Model.tblOrderDetail" Width="1.5" PointX="9.625" PointY="1.125" />
+        <AssociationConnector Association="EPharmacy027Model.FK_tblOrderDetail_tblCustomerDetail" />
+        <EntityTypeShape EntityType="EPharmacy027Model.tblContact" Width="1.5" PointX="0.75" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

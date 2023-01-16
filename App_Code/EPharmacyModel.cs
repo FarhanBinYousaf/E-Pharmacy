@@ -44,8 +44,49 @@ public partial class tblCompany
     public virtual ICollection<tblProduct> tblProducts { get; set; }
 }
 
+public partial class tblContact
+{
+    public int ID { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public string Subject { get; set; }
+    public string Message { get; set; }
+}
+
+public partial class tblCustomerDetail
+{
+    public tblCustomerDetail()
+    {
+        this.tblOrderDetails = new HashSet<tblOrderDetail>();
+    }
+
+    public int ID { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string ShippingAddress { get; set; }
+    public string PhoneNo { get; set; }
+
+    public virtual ICollection<tblOrderDetail> tblOrderDetails { get; set; }
+}
+
+public partial class tblOrderDetail
+{
+    public int ID { get; set; }
+    public int ProductID { get; set; }
+    public decimal ProductPrice { get; set; }
+    public int OrderID { get; set; }
+
+    public virtual tblCustomerDetail tblCustomerDetail { get; set; }
+}
+
 public partial class tblProduct
 {
+    public tblProduct()
+    {
+        this.tblTemps = new HashSet<tblTemp>();
+    }
+
     public int ProductID { get; set; }
     public string ProductName { get; set; }
     public string ProductDescription { get; set; }
@@ -69,6 +110,17 @@ public partial class tblProduct
 
     public virtual tblCategory tblCategory { get; set; }
     public virtual tblCompany tblCompany { get; set; }
+    public virtual ICollection<tblTemp> tblTemps { get; set; }
+}
+
+public partial class tblTemp
+{
+    public int ID { get; set; }
+    public int ProID { get; set; }
+    public long UniqueNo { get; set; }
+    public System.DateTime DateTime { get; set; }
+
+    public virtual tblProduct tblProduct { get; set; }
 }
 
 public partial class AllProducts_Result
@@ -97,6 +149,34 @@ public partial class AllProducts_Result
     public string CompanyName { get; set; }
 }
 
+public partial class CartedProducts_Result
+{
+    public int ProductID { get; set; }
+    public string ProductName { get; set; }
+    public string ProductDescription { get; set; }
+    public int CategoryID { get; set; }
+    public string ProductImageName { get; set; }
+    public string ProductMG { get; set; }
+    public int ProductQuantity { get; set; }
+    public string ProductUses { get; set; }
+    public string ProductIngredients { get; set; }
+    public string ProductBenefits { get; set; }
+    public string ProductMFG { get; set; }
+    public string ProductEXP { get; set; }
+    public string ProductFormat { get; set; }
+    public string ProductSideEffects { get; set; }
+    public string ProductPrecautions { get; set; }
+    public string ProductAgeLimit { get; set; }
+    public string ProductFormula { get; set; }
+    public string ProductManipulations { get; set; }
+    public decimal ProductPrice { get; set; }
+    public Nullable<int> CompanyID { get; set; }
+    public int ID { get; set; }
+    public int ProID { get; set; }
+    public long UniqueNo { get; set; }
+    public System.DateTime DateTime { get; set; }
+}
+
 public partial class DoAdminLogin_Result
 {
     public int AdminID { get; set; }
@@ -123,6 +203,30 @@ public partial class GetCategories_Result
 {
     public int CategoryID { get; set; }
     public string CategoryName { get; set; }
+}
+
+public partial class GetCategoryDepProducts_Result
+{
+    public int ProductID { get; set; }
+    public string ProductName { get; set; }
+    public string ProductDescription { get; set; }
+    public int CategoryID { get; set; }
+    public string ProductImageName { get; set; }
+    public string ProductMG { get; set; }
+    public int ProductQuantity { get; set; }
+    public string ProductUses { get; set; }
+    public string ProductIngredients { get; set; }
+    public string ProductBenefits { get; set; }
+    public string ProductMFG { get; set; }
+    public string ProductEXP { get; set; }
+    public string ProductFormat { get; set; }
+    public string ProductSideEffects { get; set; }
+    public string ProductPrecautions { get; set; }
+    public string ProductAgeLimit { get; set; }
+    public string ProductFormula { get; set; }
+    public string ProductManipulations { get; set; }
+    public decimal ProductPrice { get; set; }
+    public Nullable<int> CompanyID { get; set; }
 }
 
 public partial class GetCompanies_Result

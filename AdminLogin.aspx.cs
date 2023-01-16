@@ -28,7 +28,7 @@ public partial class AdminLogin : System.Web.UI.Page
             var LoginQuery = db.DoAdminLogin(txtEmail.Text, hashedPass).ToList();
             if(LoginQuery.Count > 0)
             {
-                Session["adminID"] = LoginQuery[0].AdminEmail.ToString();
+                Session["adminID"] = LoginQuery[0].AdminID.ToString();
                 Session["adminName"] = LoginQuery[0].AdminName;
                 Session.Timeout = 720;
 
