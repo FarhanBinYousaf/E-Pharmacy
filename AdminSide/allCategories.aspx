@@ -12,8 +12,8 @@
                     <asp:BoundField DataField="CategoryName" HeaderText="Name" />
                     <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
-                            <asp:LinkButton Text="Edit" CssClass="btn btn-success" CommandName="edit" CommandArgument='<%# Eval("CategoryID") %>' runat="server" />
-                            <asp:LinkButton Text="Delete" CssClass="btn btn-danger" CommandName="delete" CommandArgument='<%# Eval("CategoryID") %>' runat="server" OnClientClick="return confirm('Are you sure want to delete?')" />
+                            <asp:LinkButton Text="Edit" CssClass="btn btn-success" CommandName="edit" CommandArgument='<%# Eval("CategoryID") %>' runat="server"><i class="fa-solid fa-pen-to-square"></i></asp:LinkButton>
+                            <asp:LinkButton Text="Delete" CssClass="btn btn-danger" CommandName="delete" CommandArgument='<%# Eval("CategoryID") %>' runat="server" OnClientClick="return confirm('Are you sure want to delete?')"><i class="fa-solid fa-trash"></i></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

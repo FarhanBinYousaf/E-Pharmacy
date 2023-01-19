@@ -14,9 +14,10 @@ public partial class UserSide_ProductsList : System.Web.UI.Page
             var categories = db.GetAllCategories().ToList();
             gvCategories.DataSource = categories;
             gvCategories.DataBind();
-            
-            
 
+            var products = db.GetProducts().ToList();
+            lvProducts.DataSource = products;
+            lvProducts.DataBind();
         }
     }
     protected void gvCategories_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -25,7 +26,7 @@ public partial class UserSide_ProductsList : System.Web.UI.Page
         {
             if(e.CommandName == "showProducts")
             {
-                int catId = Convert.ToInt32(e.CommandArgument);
+                int catId = Convert.ToInt32(e.CommandArgument);      
                 var products = db.GetCategoryDepProducts(catId).ToList();
                 lvProducts.DataSource = products;
                 lvProducts.DataBind();
@@ -41,6 +42,7 @@ public partial class UserSide_ProductsList : System.Web.UI.Page
             if(e.CommandName == "addToCart")
             {
                 int ProductId = Convert.ToInt32(e.CommandArgument);
+                tblProduct n = db.tblProducts.FirstOrDefault(i => i.ProductID == ProductId);
                 if (Request.Cookies["UserCookieValue"].Value != null)
                 {
                     var uniqueNo = Request.Cookies["UserCookieValue"]["rand"];
@@ -49,11 +51,21 @@ public partial class UserSide_ProductsList : System.Web.UI.Page
                     tempTbl.ProID = ProductId;
                     tempTbl.UniqueNo = long.Parse(uniqueNo);
                     tempTbl.DateTime = dateTime;
-                    db.tblTemps.Add(tempTbl);
-                    db.SaveChanges();
-                    Response.Write("Item Added to cart");
+                    if(n.ProductQuantity == 0)
+                    {
+                        Response.Write("Don't have enough quantity to add in cart");
+                    }
+                    else
+                    {
+                        db.tblTemps.Add(tempTbl);
+                        db.SaveChanges();
+                        lblAddToCart.Text = "Item added to cart";
+                    }
+                    
+                    //Response.Write("Item Added to cart");
                 }
             }
         }
+
     }
 }

@@ -29,11 +29,11 @@ public partial class EPharmacy027Entities : DbContext
     public DbSet<tblAdmin> tblAdmins { get; set; }
     public DbSet<tblCategory> tblCategories { get; set; }
     public DbSet<tblCompany> tblCompanies { get; set; }
-    public DbSet<tblProduct> tblProducts { get; set; }
-    public DbSet<tblTemp> tblTemps { get; set; }
+    public DbSet<tblContact> tblContacts { get; set; }
     public DbSet<tblCustomerDetail> tblCustomerDetails { get; set; }
     public DbSet<tblOrderDetail> tblOrderDetails { get; set; }
-    public DbSet<tblContact> tblContacts { get; set; }
+    public DbSet<tblProduct> tblProducts { get; set; }
+    public DbSet<tblTemp> tblTemps { get; set; }
 
     public virtual ObjectResult<AllProducts_Result> AllProducts()
     {
@@ -130,5 +130,28 @@ public partial class EPharmacy027Entities : DbContext
     public virtual ObjectResult<GetCompanies_Result> GetCompanies()
     {
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCompanies_Result>("GetCompanies");
+    }
+
+    public virtual ObjectResult<GetProducts_Result> GetProducts()
+    {
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProducts_Result>("GetProducts");
+    }
+
+    public virtual int DeleteTempData(Nullable<int> id)
+    {
+        var idParameter = id.HasValue ?
+            new ObjectParameter("Id", id) :
+            new ObjectParameter("Id", typeof(int));
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteTempData", idParameter);
+    }
+
+    public virtual int DelCart(Nullable<long> uniqueId)
+    {
+        var uniqueIdParameter = uniqueId.HasValue ?
+            new ObjectParameter("UniqueId", uniqueId) :
+            new ObjectParameter("UniqueId", typeof(long));
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DelCart", uniqueIdParameter);
     }
 }

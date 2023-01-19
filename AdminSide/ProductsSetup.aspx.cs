@@ -46,7 +46,7 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                     txtFormat.Text = products.ProductFormat;
                     txtSideEffects.Text = products.ProductSideEffects;
                     txtPrecautions.Text = products.ProductPrecautions;
-                    txtAgeLimit.Text = products.ProductAgeLimit;
+                    txtAgeLimit.Text = products.ProductAgeLimit.ToString();
                     txtFormula.Text = products.ProductFormula;
                     txtManipulation.Text = products.ProductManipulations;
                     txtPrice.Text = products.ProductPrice.ToString();
@@ -96,7 +96,7 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                 products.ProductFormat = txtFormat.Text;
                 products.ProductSideEffects = txtSideEffects.Text;
                 products.ProductPrecautions = txtPrecautions.Text;
-                products.ProductAgeLimit = txtAgeLimit.Text;
+                products.ProductAgeLimit = int.Parse(txtAgeLimit.Text);
                 products.ProductFormula = txtFormula.Text;
                 products.ProductManipulations = txtManipulation.Text;
                 products.ProductPrice = decimal.Parse(txtPrice.Text);
@@ -130,7 +130,7 @@ public partial class AdminSide_ProductsSetup : System.Web.UI.Page
                 products.ProductFormat = txtFormat.Text;
                 products.ProductSideEffects = txtSideEffects.Text;
                 products.ProductPrecautions = txtPrecautions.Text;
-                products.ProductAgeLimit = txtAgeLimit.Text;
+                products.ProductAgeLimit = int.Parse(txtAgeLimit.Text);
                 products.ProductFormula = txtFormula.Text;
                 products.ProductManipulations = txtManipulation.Text;
                 products.ProductPrice = decimal.Parse(txtPrice.Text);

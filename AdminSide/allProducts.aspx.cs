@@ -42,7 +42,17 @@ public partial class AdminSide_allProducts : System.Web.UI.Page
             using(EPharmacy027Entities db = new EPharmacy027Entities())
             {
                 int productId = Convert.ToInt32(e.CommandArgument);
-                db.DeleteProduct(productId);
+                tblTemp t = db.tblTemps.FirstOrDefault(i => i.ProID == productId);
+                if(t != null)
+                {
+                    lblProductKeyError.Style.Add("visibility", "true");
+                    lblProductKeyError.InnerText = "Note:Sorry! You are not allowed to delete this product";
+                }
+                else
+                {
+                    db.DeleteProduct(productId);
+                }
+                
             }
         }
         FillingProducts();

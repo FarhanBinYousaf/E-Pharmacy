@@ -12,8 +12,8 @@
                     <asp:BoundField DataField="CompanyName" HeaderText="Name"  />
                     <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
-                            <asp:LinkButton Text="Edit" CssClass="btn btn-primary" runat="server" CommandName="edit" CommandArgument='<%# Eval("CompanyID") %>' />
-                            <asp:LinkButton Text="Delete" CssClass="btn btn-danger" runat="server" CommandName="delete" CommandArgument='<%# Eval("CompanyID") %>' OnClientClick="return confirm('Are you sure you want to delete this?')" />
+                            <asp:LinkButton Text="Edit" CssClass="btn btn-primary" runat="server" CommandName="edit" CommandArgument='<%# Eval("CompanyID") %>'><i class="fa-solid fa-pen-to-square"></i></asp:LinkButton>
+                            <asp:LinkButton Text="Delete" CssClass="btn btn-danger" runat="server" CommandName="delete" CommandArgument='<%# Eval("CompanyID") %>' OnClientClick="return confirm('Are you sure you want to delete this?')"><i class="fa-solid fa-trash"></i></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

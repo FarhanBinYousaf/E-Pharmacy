@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-               <asp:HyperLink NavigateUrl="~/AdminSide/AdminSetup.aspx" Text="Make New Admin" CssClass="btn btn-primary mb-5"  runat="server" />
+               <asp:HyperLink NavigateUrl="~/AdminSide/AdminSetup.aspx" Text="Make New Admin" CssClass="btn btn-primary mb-5"  runat="server"><i class="fa-solid fa-square-plus"></i> Add new admin</asp:HyperLink>
 
             <div class="card border-0 shadow">
                 <div class="card-body">
@@ -16,8 +16,8 @@
                             <asp:BoundField DataField="AdminEmail" HeaderText="Email" />
                             <asp:TemplateField HeaderText="Action">
                                 <ItemTemplate >
-                                    <asp:LinkButton Text="Edit" CommandName="edit" CommandArgument='<%# Eval("AdminID") %>' CssClass="btn btn-primary" runat="server" />
-                                    <asp:LinkButton Text="Delete" CommandName="delete" CommandArgument='<%# Eval("AdminID") %>' CssClass="btn btn-danger" OnClientClick="return confirm('Are you sure you want to delete this?')" runat="server" />
+                                    <asp:LinkButton Text="Edit" CommandName="edit" CommandArgument='<%# Eval("AdminID") %>' CssClass="btn btn-primary" runat="server"><i class="fa-solid fa-pen-to-square"></i></asp:LinkButton>
+                                    <asp:LinkButton Text="Delete" CommandName="delete" CommandArgument='<%# Eval("AdminID") %>' CssClass="btn btn-danger" OnClientClick="return confirm('Are you sure you want to delete this?')" runat="server"><i class="fa-solid fa-trash"></i></asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

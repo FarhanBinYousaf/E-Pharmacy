@@ -102,7 +102,7 @@ public partial class tblProduct
     public string ProductFormat { get; set; }
     public string ProductSideEffects { get; set; }
     public string ProductPrecautions { get; set; }
-    public string ProductAgeLimit { get; set; }
+    public Nullable<int> ProductAgeLimit { get; set; }
     public string ProductFormula { get; set; }
     public string ProductManipulations { get; set; }
     public decimal ProductPrice { get; set; }
@@ -140,7 +140,7 @@ public partial class AllProducts_Result
     public string ProductFormat { get; set; }
     public string ProductSideEffects { get; set; }
     public string ProductPrecautions { get; set; }
-    public string ProductAgeLimit { get; set; }
+    public Nullable<int> ProductAgeLimit { get; set; }
     public string ProductFormula { get; set; }
     public string ProductManipulations { get; set; }
     public decimal ProductPrice { get; set; }
@@ -166,7 +166,7 @@ public partial class CartedProducts_Result
     public string ProductFormat { get; set; }
     public string ProductSideEffects { get; set; }
     public string ProductPrecautions { get; set; }
-    public string ProductAgeLimit { get; set; }
+    public Nullable<int> ProductAgeLimit { get; set; }
     public string ProductFormula { get; set; }
     public string ProductManipulations { get; set; }
     public decimal ProductPrice { get; set; }
@@ -222,7 +222,7 @@ public partial class GetCategoryDepProducts_Result
     public string ProductFormat { get; set; }
     public string ProductSideEffects { get; set; }
     public string ProductPrecautions { get; set; }
-    public string ProductAgeLimit { get; set; }
+    public Nullable<int> ProductAgeLimit { get; set; }
     public string ProductFormula { get; set; }
     public string ProductManipulations { get; set; }
     public decimal ProductPrice { get; set; }
@@ -233,4 +233,28 @@ public partial class GetCompanies_Result
 {
     public int CompanyID { get; set; }
     public string CompanyName { get; set; }
+}
+
+public partial class GetProducts_Result
+{
+    public int ProductID { get; set; }
+    public string ProductName { get; set; }
+    public string ProductDescription { get; set; }
+    public int CategoryID { get; set; }
+    public string ProductImageName { get; set; }
+    public string ProductMG { get; set; }
+    public int ProductQuantity { get; set; }
+    public string ProductUses { get; set; }
+    public string ProductIngredients { get; set; }
+    public string ProductBenefits { get; set; }
+    public string ProductMFG { get; set; }
+    public string ProductEXP { get; set; }
+    public string ProductFormat { get; set; }
+    public string ProductSideEffects { get; set; }
+    public string ProductPrecautions { get; set; }
+    public Nullable<int> ProductAgeLimit { get; set; }
+    public string ProductFormula { get; set; }
+    public string ProductManipulations { get; set; }
+    public decimal ProductPrice { get; set; }
+    public Nullable<int> CompanyID { get; set; }
 }

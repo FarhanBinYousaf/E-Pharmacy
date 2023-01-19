@@ -14,19 +14,23 @@ public partial class UserSide_cart : System.Web.UI.Page
     public decimal price=0;
     protected void Page_Load(object sender, EventArgs e)
     {
-        using(EPharmacy027Entities db = new EPharmacy027Entities())
+        FillCart();
+        
+    }
+    protected void FillCart()
+    {
+        using (EPharmacy027Entities db = new EPharmacy027Entities())
         {
-            if(Request.Cookies["UserCookieValue"] != null)
+            if (Request.Cookies["UserCookieValue"] != null)
             {
                 var unique = Request.Cookies["UserCookieValue"]["rand"];
                 var items = db.CartedProducts(long.Parse(unique)).ToList();
                 gvCartedItems.DataSource = items;
                 gvCartedItems.DataBind();
-                foreach(var itemIterator in items)
+                foreach (var itemIterator in items)
                 {
                     var eachPrice = itemIterator.ProductPrice;
                     price = price + eachPrice;
-                    //Response.Write(price);
                 }
             }
         }
@@ -58,25 +62,32 @@ public partial class UserSide_cart : System.Web.UI.Page
             var PurchasedItems = db.CartedProducts(long.Parse(UniqueNo)).ToList();
             foreach(var BuyedItems in PurchasedItems)
             {
+                int pid = BuyedItems.ProID;
                 tblOrderDetail OrderDetail = new tblOrderDetail();
                 OrderDetail.ProductID = BuyedItems.ProID;
                 OrderDetail.ProductPrice = BuyedItems.ProductPrice;
                 OrderDetail.OrderID = OrderId;
                 db.tblOrderDetails.Add(OrderDetail);
                 db.SaveChanges();
+                tblProduct m = db.tblProducts.FirstOrDefault(a => a.ProductID == pid);
+                m.ProductQuantity = m.ProductQuantity - 1;
+                db.SaveChanges();
+                //Empty cart after completing order
+                db.DelCart(long.Parse(UniqueNo));
             }
-            lblOrdrCmplt.Text = "Youu order has been confirmed successfully. Check your mail for confirmation";
+            FillCart();
+            lblOrdrCmplt.Text = "Your order has been confirmed successfully. Check your mail for confirmation";
             using (MailMessage mm = new MailMessage(smtpSection.From, txtEmail.Text.Trim()))
             {
                 mm.Subject = txtEmail.Text.Trim();
-                mm.IsBodyHtml = true;
-                string htmlString = @"<html>
-                <body>
-                    <h2>Thanks for Shopping with Pharmacel</h2>
-                    <p>Your order has been confirmed successfully</p>
-            </body>
-            </html>";
-                mm.Body = htmlString;
+                //mm.IsBodyHtml = true;
+//                string htmlString = @"<html>
+//                <body>
+//                    <h2>Thanks for Shopping with Pharmacel</h2>
+//                    <p>Your order has been confirmed successfully.Shipping ID is + UniqueNo + </p>
+//            </body>
+//            </html>";
+                mm.Body = "Thanks for shopping with Pharmacel. Your shipping ID is " + UniqueNo;
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = smtpSection.Network.Host;
                 smtp.EnableSsl = smtpSection.Network.EnableSsl;
@@ -96,6 +107,21 @@ public partial class UserSide_cart : System.Web.UI.Page
                 }
             }
             //Response.Write("Your Order has been confirmed");
+        }
+    }
+    protected void gvCartedItems_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        using(EPharmacy027Entities db = new EPharmacy027Entities())
+        {
+            if(e.CommandName == "delete_cartedItems")
+            { 
+                //Response.Write(e.CommandArgument);
+                int Id = Convert.ToInt32(e.CommandArgument);
+                db.DeleteTempData(Id);
+                Response.Redirect("cart.aspx");
+                FillCart();
+            }
+            
         }
     }
 }
